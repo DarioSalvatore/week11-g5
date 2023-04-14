@@ -19,9 +19,8 @@ const MyAlbum = () => {
               id="sidebar"
             >
               <div className="nav-container">
-                <Link to={"MyHome"}>
-                  <img src={Logo} alt="Spotify_Logo" width={131} height={40} />
-                </Link>
+                <img src={Logo} alt="Spotify_Logo" width={131} height={40} />
+
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -40,16 +39,16 @@ const MyAlbum = () => {
                   <div className="navbar-nav">
                     <ul>
                       <li>
-                        <a className="nav-item nav-link" href="#">
+                        <Link to="/" className="nav-item nav-link">
                           <i className="fas fa-home fa-lg" />
                           &nbsp; Home
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a className="nav-item nav-link" href="#">
+                        <Link to="#" className="nav-item nav-link">
                           <i className="fas fa-book-open fa-lg" />
                           &nbsp; Your Library
-                        </a>
+                        </Link>
                       </li>
                       <li>
                         <div className="input-group mt-3">
@@ -87,7 +86,7 @@ const MyAlbum = () => {
                 <button className="btn login-btn" type="button">
                   Login
                 </button>
-                <a href="#">Cookie Policy</a> |<a href="#"> Privacy</a>
+                <Link to="#">Cookie Policy</Link> |<Link to="#"> Privacy</Link>
               </div>
             </nav>
           </div>
@@ -121,21 +120,21 @@ const MyAlbum = () => {
               <div className="row">
                 <div className="col-6 col-md-4 col-lg-2 offset-3 offset-md-4 offset-lg-5 playerControls mt-1">
                   <div className="row">
-                    <a href="#">
+                    <Link to="#">
                       <img src={Shuffle} alt="shuffle" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <img src={Previous} alt="shuffle" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <img src={Play} alt="shuffle" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <img src={Next} alt="shuffle" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <img src={Repeat} alt="shuffle" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
