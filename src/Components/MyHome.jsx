@@ -1,6 +1,13 @@
 import { Container, Row, Col } from "react-bootstrap";
 import Logo from "../images/Spotify_Logo.png";
 
+import Next from "../images/Next.png";
+import Play from "../images/Play.png";
+import Previous from "../images/Previous.png";
+import Repeat from "../images/Repeat.png";
+import Shuffle from "../images/Shuffle.png";
+import { Link } from "react-router-dom";
+
 const MyHome = () => {
   return (
     <div>
@@ -13,9 +20,9 @@ const MyHome = () => {
               id="sidebar"
             >
               <div className="nav-container">
-                <a className="navbar-brand" href="index.html">
+                <Link to={"MyHome"}>
                   <img src={Logo} alt="Spotify_Logo" width={131} height={40} />
-                </a>
+                </Link>
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -150,19 +157,19 @@ const MyHome = () => {
               <div className="col-6 col-md-4 col-lg-2 offset-3 offset-md-4 offset-lg-5 playerControls mt-1">
                 <div className="row">
                   <a href="#">
-                    <img src="playerbuttons/Shuffle.png" alt="shuffle" />
+                    <img src={Shuffle} alt="shuffle" />
                   </a>
                   <a href="#">
-                    <img src="playerbuttons/Previous.png" alt="shuffle" />
+                    <img src={Previous} alt="shuffle" />
                   </a>
                   <a href="#">
-                    <img src="playerbuttons/Play.png" alt="shuffle" />
+                    <img src={Play} alt="shuffle" />
                   </a>
                   <a href="#">
-                    <img src="playerbuttons/Next.png" alt="shuffle" />
+                    <img src={Next} alt="shuffle" />
                   </a>
                   <a href="#">
-                    <img src="playerbuttons/Repeat.png" alt="shuffle" />
+                    <img src={Repeat} alt="shuffle" />
                   </a>
                 </div>
               </div>
