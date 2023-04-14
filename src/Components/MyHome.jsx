@@ -1,15 +1,82 @@
-import { Container, Row, Col } from "react-bootstrap";
 import Logo from "../images/Spotify_Logo.png";
-
+import { Form, Button } from "react-bootstrap";
 import Next from "../images/Next.png";
 import Play from "../images/Play.png";
 import Previous from "../images/Previous.png";
 import Repeat from "../images/Repeat.png";
 import Shuffle from "../images/Shuffle.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const MyHome = () => {
+  const [query, setQuery] = useState("");
+
+  const rockArtists = [
+    "queen",
+    "u2",
+    "thepolice",
+    "eagles",
+    "thedoors",
+    "oasis",
+    "thewho",
+    "bonjovi",
+  ];
+
+  const popArtists = [
+    "maroon5",
+    "coldplay",
+    "onerepublic",
+    "jamesblunt",
+    "katyperry",
+    "arianagrande",
+  ];
+
+  const hipHopArtists = [
+    "eminem",
+    "snoopdogg",
+    "lilwayne",
+    "drake",
+    "kanyewest",
+  ];
+
+  useEffect(() => {
+   
+
+    setQuery("");
+  }, []);
+
+  const handlesubmit = async (e) => {
+    setQuery(e.target.value);
+    e.preventDefault();
+    search();
+  };
+
+  let headers = new Headers({
+    // sets the headers
+    "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+    "X-RapidAPI-Key": "9d408f0366mshab3b0fd8e5ecdf7p1b09f2jsne682a1797fa0",
+  });
+
+  const search = async () => {
+    try {
+      const resp = await fetch(
+        "https://striveschool-api.herokuapp.com/api/deezer/search?q=" + query,
+        {
+          method: "GET",
+          headers,
+        }
+      );
+      if (resp.ok) {
+        const result = await resp.json();
+        const songs = result.data;
+        console.log(songs);
+      }
+    } catch (err) {
+      console.log("qualcosa è andato storto nella ricerca!");
+    }
+  };
   return (
+    
     <div>
       <div className="container-fluid">
         <div className="row">
@@ -20,9 +87,8 @@ const MyHome = () => {
               id="sidebar"
             >
               <div className="nav-container">
-                <Link to={"MyHome"}>
-                  <img src={Logo} alt="Spotify_Logo" width={131} height={40} />
-                </Link>
+                <img src={Logo} alt="Spotify_Logo" width={131} height={40} />
+
                 <button
                   className="navbar-toggler"
                   type="button"
@@ -41,41 +107,38 @@ const MyHome = () => {
                   <div className="navbar-nav">
                     <ul>
                       <li>
-                        <a className="nav-item nav-link" href="#">
+                        <Link to="/" className="nav-item nav-link">
                           <i className="fas fa-home fa-lg" />
                           &nbsp; Home
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <a className="nav-item nav-link" href="#">
+                        <Link to="#" className="nav-item nav-link">
                           <i className="fas fa-book-open fa-lg" />
                           &nbsp; Your Library
-                        </a>
+                        </Link>
                       </li>
                       <li>
-                        <div className="input-group mt-3">
-                          <input
+                        <Form className="mt-3">
+                          <Form.Control
                             type="text"
-                            className="form-control mb-2"
-                            id="searchField"
+                            className="mb-2"
                             placeholder="Search"
-                            aria-label="Search"
-                            aria-describedby="basic-addon2"
+                            onSubmit={handlesubmit}
                           />
                           <div
                             className="input-group-append"
                             style={{ marginBottom: "4%" }}
                           >
-                            <button
+                            <Button
                               className="btn btn-outline-secondary btn-sm"
-                              type="button"
+                              type="submit"
                               id="button-addon1"
-                              //   onClick={search()}
                             >
                               GO
-                            </button>
+                            </Button>
                           </div>
-                        </div>
+                        </Form>
                       </li>
                     </ul>
                   </div>
@@ -88,7 +151,7 @@ const MyHome = () => {
                 <button className="btn login-btn" type="button">
                   Login
                 </button>
-                <a href="#">Cookie Policy</a> |<a href="#"> Privacy</a>
+                <Link to="#">Cookie Policy</Link> |<Link to="#"> Privacy</Link>
               </div>
             </nav>
           </div>
@@ -97,11 +160,11 @@ const MyHome = () => {
           <div className="col-12 col-md-9 offset-md-3 mainPage">
             <div className="row">
               <div className="col-9 col-lg-11 mainLinks d-none d-md-flex">
-                <a href="#">TRENDING</a>
-                <a href="#">PODCAST</a>
-                <a href="#">MOODS AND GENRES</a>
-                <a href="#">NEW RELEASES</a>
-                <a href="#">DISCOVER</a>
+                <Link to="#">TRENDING</Link>
+                <Link to="#">PODCAST</Link>
+                <Link to="#">MOODS AND GENRES</Link>
+                <Link to="#">NEW RELEASES</Link>
+                <Link to="#">DISCOVER</Link>
               </div>
             </div>
             <div className="row">
@@ -119,7 +182,31 @@ const MyHome = () => {
                   <div
                     className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 imgLinks py-3"
                     id="rockSection"
-                  />
+                  >
+                    {songs.map(songInfo)=>(
+                      <div class="col text-center" id={songInfo.id}>
+                      <a href="/album_page.html?id=${songInfo.album.id}">
+                        <img class="img-fluid" src={
+                          songInfo.album.cover_medium
+                        } alt="1" />
+                      </a>
+                      <p>
+                        <a href="/album_page.html?id=${songInfo.album.id}">
+                          Album: "${
+                            songInfo.album.title.length < 16
+                              ? `${songInfo.album.title}`
+                              : `${songInfo.album.title.substring(0, 16)}...`
+                          }"<br/>
+                        </a>
+                        <a href="/artist_page.html?id=${songInfo.artist.id}">
+                          Artist: ${songInfo.artist.name}
+                        </a>
+                      </p>
+                    </div>
+                    )
+
+                    }
+                  </div>
                 </div>
               </div>
             </div>
@@ -156,21 +243,21 @@ const MyHome = () => {
             <div className="row">
               <div className="col-6 col-md-4 col-lg-2 offset-3 offset-md-4 offset-lg-5 playerControls mt-1">
                 <div className="row">
-                  <a href="#">
+                  <Link to="#">
                     <img src={Shuffle} alt="shuffle" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="#">
                     <img src={Previous} alt="shuffle" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="#">
                     <img src={Play} alt="shuffle" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="#">
                     <img src={Next} alt="shuffle" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="#">
                     <img src={Repeat} alt="shuffle" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
